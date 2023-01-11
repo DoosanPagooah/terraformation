@@ -10,9 +10,15 @@ resource "aws_instance" "example"{
     user_data  = <<-EOF
                 #!/bin/bash
                 echo "Hello, World" > index.html
-                nohup busybox http -f -p 8080 &
+                nohup busybox httpd -f -p 8080 &
                 EOF
     
+/*
+Since you set user_data_replace_on_change to true and changed the user_data
+parameter, this will force a replacement, which means that the original EC2 Instance
+will be terminated and a completely new Instance will be created. 
+*/
+
     user_data_replace_on_change = true
 
     tags = {
