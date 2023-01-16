@@ -40,7 +40,18 @@ resource "aws_security_group" "instance" {
     from_port    = 8080
     to_port      = 8080
     protocol     = "tcp"
-    cisdr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
+}
+
+variable "security_group_name" {
+  description = "The name of the security group"
+  type = string
+  default = "terraform-example-instance"
+}
+
+output "public_ip" {
+  value = aws_instance.example.public_ip
+  description = "The public IP of the Instance"
 }
